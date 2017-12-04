@@ -4,11 +4,24 @@ from django.http import Http404
 # Create your views here.
 from blog.forms import CommentForm
 from .models import Blog, Comment
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def get_blogs(request):
+    blog_list = Blog.objects.all().order_by('-created')
+    paginator = Paginator(blog_list, 2)
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+
     ctx = {
-        'blogs': Blog.objects.all().order_by('-created')
+        'blogs': contacts
     }
     return render(request, 'blog_list.html', ctx)
     #return render_to_response('blog_list.html', {'object_list': ctx}, context_instance=RequestContext(request))
