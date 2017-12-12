@@ -17,10 +17,26 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from blog.views import get_blogs, get_detail
+from rest_framework import routers
+from blog import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'blogs', views.BlogViewSet)
+router.register(r'comments', views.CommentViewSet)
+router.register(r'tags', views.TagViewSet)
+router.register(r'categorys', views.CategoryViewSet)
+
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]
+'''urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog_list', get_blogs, name='blog_get_blogs'),
     url(r'^detail/(\d+)/$', get_detail, name='blog_get_detail'),
     url(r'^ueditor/', include('DjangoUeditor.urls' )),
 ]
+'''

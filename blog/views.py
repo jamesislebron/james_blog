@@ -6,6 +6,11 @@ from blog.forms import CommentForm
 from .models import Blog, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from django.contrib.auth.models import User, Group
+from blog.models import Blog, Category, Comment, Tag
+from rest_framework import viewsets
+from .serializers import UserSerializer, GroupSerializer, CategorySerializer, BlogSerializer, CommentSerializer, TagSerializer
+
 
 def get_blogs(request):
     blog_list = Blog.objects.all().order_by('-created')
@@ -48,3 +53,34 @@ def get_detail(request, blog_id):
         'form': form
     }
     return render(request, 'blog_detail.html', ctx)
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API端：允许查看和编辑用户
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API端：允许查看和编辑组
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class BlogViewSet(viewsets.ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer

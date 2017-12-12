@@ -39,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'DjangoUeditor',
-   # 'pagination',
+    'rest_framework',
+    # 'pagination',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 3
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
