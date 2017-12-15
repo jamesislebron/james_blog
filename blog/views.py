@@ -12,7 +12,7 @@ from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer, CategorySerializer, BlogSerializer, CommentSerializer, TagSerializer
 
 
-def get_blogs(request):
+'''def get_blogs(request):
     blog_list = Blog.objects.all().order_by('-created')
     paginator = Paginator(blog_list, 2)
     page = request.GET.get('page')
@@ -53,7 +53,7 @@ def get_detail(request, blog_id):
         'form': form
     }
     return render(request, 'blog_detail.html', ctx)
-
+'''
 class UserViewSet(viewsets.ModelViewSet):
     """
     API端：允许查看和编辑用户
@@ -74,7 +74,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 class BlogViewSet(viewsets.ModelViewSet):
-    queryset = Blog.objects.all()
+    queryset = Blog.objects.all().order_by('-created')
     serializer_class = BlogSerializer
 
 class CommentViewSet(viewsets.ModelViewSet):

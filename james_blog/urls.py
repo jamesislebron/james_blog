@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from blog.views import get_blogs, get_detail
+#from blog.views import get_blogs, get_detail
 from rest_framework import routers
 from blog import views
 
